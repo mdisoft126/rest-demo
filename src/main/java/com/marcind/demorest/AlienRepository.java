@@ -39,6 +39,12 @@ public class AlienRepository
 				return a;
 		}
 		
-		return null;
+		return new Alien();
+		//return null;
+	}
+
+	public void create(Alien a1) {
+		// TODO Auto-generated method stub
+		aliens.add(a1);
 	}
 }
