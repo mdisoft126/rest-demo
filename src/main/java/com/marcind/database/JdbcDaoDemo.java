@@ -14,8 +14,8 @@ public class JdbcDaoDemo {
 //		Student s1 = dao.getStudent(11); // get
 //		System.out.println(s1.sname); // get
 		Student s2 = new Student();
-		s2.rollno = 15;
-		s2.sname = "Archana";
+		s2.rollno = 17;
+		s2.sname = "Buton";
 		dao.addStudent(s2);
 	}
 

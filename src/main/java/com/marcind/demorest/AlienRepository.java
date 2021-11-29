@@ -1,50 +1,77 @@
-package com.marcind.demorest;
+	package com.marcind.demorest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
+import com.marcind.database.Pass;
 
 public class AlienRepository 
 {
-	List<Alien> aliens;
+	Connection con = null;
 	
 	public AlienRepository()
 	{
-		aliens = new ArrayList<Alien>();
-		
-		Alien a1 = new Alien();
-		a1.setId(101);
-		a1.setName("Marcin");
-		a1.setPoints(60);
-		
-		Alien a2 = new Alien();
-		a2.setId(102);
-		a2.setName("Zbychu");
-		a2.setPoints(70);
-		
-		aliens.add(a1);
-		aliens.add(a2);	
+		try {
+			Pass passw = new Pass();
+			String pass = passw.p;
+			String url = "jdbc:mysql://localhost:3306/restdb";
+			String username = "root";
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, username, pass);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);;
+		}
 	}
-	
+	// fetch all values
 	public List<Alien> getAliens()
 	{
+		List<Alien> aliens = new ArrayList<Alien>();
+		String sql = "select * from alien";
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next())
+			{
+				Alien a = new Alien();
+				a.setId(rs.getInt(1));
+				a.setName(rs.getString(2));
+				a.setPoints(rs.getInt(3));
+				
+				aliens.add(a);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		
 		return aliens;
 	}
 	
 	public Alien getAlien(int id)
 	{
-		
-		for(Alien a : aliens)
-		{
-			if(a.getId()==id)
-				return a;
+		String sql = "select * from alien where id = " + id;
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			while(rs.next())
+			{
+				Alien a = new Alien();
+				a.setId(rs.getInt(1));
+				a.setName(rs.getString(2));
+				a.setPoints(rs.getInt(3));
+				
+				aliens.add(a);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
 		}
-		
-		return new Alien();
-		//return null;
 	}
 
 	public void create(Alien a1) {
 		// TODO Auto-generated method stub
 		aliens.add(a1);
 	}
+	
 }
