@@ -2,8 +2,10 @@ package com.marcind.demorest;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -34,10 +36,27 @@ public class AlienResource
 	
 	@POST
 	@Path("alien")
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public Alien createAlien(Alien a1)
 	{
 		System.out.println(a1);
 		repo.create(a1);
+		return a1;
+	}
+	
+	@PUT
+	@Path("alien")
+	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
+	public Alien updateAlien(Alien a1)
+	{
+		System.out.println(a1);
+		if(repo.getAlien(a1.getId()).getId()==0)
+		{
+			repo.create(a1);
+		} else
+		{
+			repo.update(a1);
+		}
 		return a1;
 	}
 }
