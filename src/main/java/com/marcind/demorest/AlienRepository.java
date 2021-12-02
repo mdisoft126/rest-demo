@@ -96,4 +96,18 @@ public class AlienRepository
 		}
 	}
 	
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		String sql = "delete from alien where id=?";
+		try {
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, id);
+			st.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		
+	}
+	
 }
